@@ -3,6 +3,19 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+*/NoderunnerService.Client/out/
+*/NoderunnerService.NodeListConsole/out/
+*/NoderunnerService.Client/logs/
+*/NoderunnerService.NodeListConsole/logs/
+NoderunnerService.WebApi/out/
+NoderunnerService.Common/out/
+NoderunnerService.Contract/out/
+NoderunnerService.DbStore/out/
+NoderunnerService.IntegrationTests/out/
+NoderunnerService.Jobs/out/
+NoderunnerService.Model/out/
+NoderunnerService.Redis/out/
+NoderunnerService.SSHNet/out/
 
 # User-specific files
 *.suo

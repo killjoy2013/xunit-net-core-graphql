@@ -13,12 +13,15 @@ namespace GraphQL.WebApi.Repository
             modelBuilder.Entity<City>(entity =>
             {
                 entity.Property(e => e.creation_date).HasDefaultValueSql("(now())");
+                entity.HasIndex(e => e.name).IsUnique(true);
                
             });
+           
 
             modelBuilder.Entity<Country>(entity =>
             {
                 entity.Property(e => e.creation_date).HasDefaultValueSql("(now())");
+                entity.HasIndex(e => e.name).IsUnique(true);
             });
         }
     }

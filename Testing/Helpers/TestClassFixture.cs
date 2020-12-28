@@ -14,15 +14,10 @@ using System.Net.Http;
 namespace Testing.Helpers
 {
     public class TestClassFixture : IDisposable
-    {
-        #region Properties
-        public DatabaseContext Context { get; set; }
-
+    {      
+        public DatabaseContext DbContext { get; set; }
         public TestServer Server { get; set; }
-
-        public HttpClient Client { get; set; }
-        #endregion
-
+        public HttpClient Client { get; set; } 
         public TestClassFixture()
         {
             var webHostBuilder = WebHost.CreateDefaultBuilder();
@@ -30,25 +25,16 @@ namespace Testing.Helpers
             webHostBuilder.UseEnvironment("Development");
 
             webHostBuilder.ConfigureAppConfiguration((builderContext, config) =>
-            {              
-                config.SetBasePath(Directory.GetCurrentDirectory());                
-                    config.AddJsonFile($"appsettings.Development.json", optional: false, reloadOnChange: true)
-                                 .AddEnvironmentVariables();
-               
-                //else
-                //{
-                //    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                //                   .AddEnvironmentVariables();
-                //}
-               
+            {
+                config.SetBasePath(Directory.GetCurrentDirectory());
+                config.AddJsonFile($"appsettings.Development.json", optional: false, reloadOnChange: true)
+                             .AddEnvironmentVariables();                
+
             });
 
-
             Server = new TestServer(webHostBuilder.UseStartup<Startup>());
-            Client = Server.CreateClient();          
-
-            Context = Server.Host.Services.GetService(typeof(DatabaseContext)) as DatabaseContext;
-           
+            Client = Server.CreateClient();
+            DbContext = Server.Host.Services.GetService(typeof(DatabaseContext)) as DatabaseContext;
         }
 
         private static Random random = new Random();
@@ -60,21 +46,17 @@ namespace Testing.Helpers
         }
         public void Dispose()
         {
-            Context.Dispose();
+            DbContext.Dispose();
             Client.Dispose();
             Server.Dispose();
-
         }
-
     }
-
     public class GraphQLError
     {
         public string Key { get; set; }
         public string Value { get; set; }
 
     }
-
     public class GqlResult<T>
     {
         public GqlResult(string serviceResultJson, string queryName)
@@ -90,7 +72,6 @@ namespace Testing.Helpers
         public T Data { get; set; }
         public GraphQLError GraphQLError { get; set; }
     }
-
     public class GqlResultList<T>
     {
         public GqlResultList(string serviceResultJson, string queryName)
@@ -108,6 +89,4 @@ namespace Testing.Helpers
         public IList<T> Data { get; set; }
         public GraphQLError GraphQLError { get; set; }
     }
-
-
 }

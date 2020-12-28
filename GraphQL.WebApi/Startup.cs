@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using GraphQL;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.WebApi.Graph.Subscription;
+using GraphQL.WebApi.Helpers;
 
 namespace GraphQL.WebApi
 {
@@ -42,6 +43,8 @@ namespace GraphQL.WebApi
             services.AddScoped<IFieldService, FieldService>();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
 
+            services.AddScoped<ICountryHelper, CountryHelper>();
+
             services.AddScoped<MainMutation>();
             services.AddScoped<MainQuery>();
             services.AddScoped<CityGType>();
@@ -52,6 +55,8 @@ namespace GraphQL.WebApi
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<GraphQLSchema>();
+
+
 
             services.AddGraphQL(o => { o.ExposeExceptions = _env.IsDevelopment(); })
               .AddGraphTypes(ServiceLifetime.Scoped)             
